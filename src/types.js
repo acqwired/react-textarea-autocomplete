@@ -4,15 +4,15 @@ export type caretPositionType = "start" | "end" | "next" | number;
 
 export type textToReplaceType = ?{|
   text: string,
-  caretPosition: caretPositionType,
-  key?: ?string
-|};
+    caretPosition: caretPositionType,
+      key ?: ? string
+        |};
 
 export type outputType = (Object | string, ?string) => ?textToReplaceType;
 
 export type dataProviderType = string =>
-  | Promise<Array<Object | string>>
-  | Array<Object | string>;
+  | Promise < Array < Object | string >>
+  | Array < Object | string >;
 
 /**
  * Item Types
@@ -36,9 +36,10 @@ export type ListProps = {
   itemStyle: ?Object,
   className: ?string,
   itemClassName: ?string,
-  onItemHighlighted: (Object | string ) => void,
+  onItemHighlighted: (Object | string) => void,
   onSelect: (Object | string) => void,
-  dropdownScroll: HTMLDivElement => void
+  dropdownScroll: HTMLDivElement => void,
+  groups: ?Array<{ label: string, key: string }>,
 };
 
 /**
@@ -52,12 +53,12 @@ export type ListState = {
  * Textarea Types
  */
 export type settingType = {|
-  component: React$StatelessFunctionalComponent<*>,
-  dataProvider: dataProviderType,
-  allowWhitespace?: boolean,
-  afterWhitespace?: boolean,
-  output?: (Object | string, ?string) => textToReplaceType | string
-|};
+  component: React$StatelessFunctionalComponent <*>,
+    dataProvider: dataProviderType,
+      allowWhitespace ?: boolean,
+      afterWhitespace ?: boolean,
+      output ?: (Object | string, ? string) => textToReplaceType | string
+        |};
 
 export type triggerType = {
   [string]: settingType
@@ -77,8 +78,8 @@ export type TextareaProps = {
   onCaretPositionChange: ?(number) => void,
   innerRef: ?(HTMLTextAreaElement) => void,
   scrollToItem:
-    | boolean
-    | ((container: HTMLDivElement, item: HTMLDivElement) => void),
+  | boolean
+  | ((container: HTMLDivElement, item: HTMLDivElement) => void),
   closeOnClickOutside?: boolean,
   onItemHighlighted?: ({ currentTrigger: ?string, item: ?Object | ?string }) => void,
   onItemSelected?: ({ currentTrigger: string, item: Object | string }) => void,
@@ -98,7 +99,8 @@ export type TextareaProps = {
   itemClassName: ?string,
   loaderClassName: ?string,
   dropdownClassName: ?string,
-  renderToBody: ?boolean
+  renderToBody: ?boolean,
+  groups: ?Array<{ label: string, key: string }>,
 };
 
 export type TextareaState = {

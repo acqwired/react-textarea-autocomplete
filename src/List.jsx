@@ -170,27 +170,40 @@ export default class List extends React.Component<ListProps, ListState> {
       style,
       itemClassName,
       className,
-      itemStyle
+      itemStyle,
+      groups
     } = this.props;
-
     return (
-      <ul className={`rta__list ${className || ""}`} style={style}>
-        {values.map(item => (
-          <Item
-            key={this.getId(item)}
-            innerRef={ref => {
-              this.itemsRef[this.getId(item)] = ref;
-            }}
-            selected={this.isSelected(item)}
-            item={item}
-            className={itemClassName}
-            style={itemStyle}
-            onClickHandler={this.onPressEnter}
-            onSelectHandler={this.selectItem}
-            component={component}
-          />
-        ))}
-      </ul>
+      <div className={`rta__listcontainer`}>
+        <div className={`rta__listcontainertitle`}>Available Variables</div>
+        <div className="rta__groups">
+          {groups.map(group => <button className="rta__group_button">{group.label}</button>)}
+        </div>
+        <div>
+          {groups.map(group => {
+            return <div>
+              <div className="rta__listgroup">{group.label}</div>
+              <ul className={`rta__list ${className || ""}`} style={style}>
+                {values.filter(value => value.group === group.key).map(item => (
+                  <Item
+                    key={this.getId(item)}
+                    innerRef={ref => {
+                      this.itemsRef[this.getId(item)] = ref;
+                    }}
+                    selected={this.isSelected(item)}
+                    item={item}
+                    className={itemClassName}
+                    style={itemStyle}
+                    onClickHandler={this.onPressEnter}
+                    onSelectHandler={this.selectItem}
+                    component={component}
+                  />
+                ))}
+              </ul>
+            </div>
+          })}
+        </div>
+      </div>
     );
   }
 }
