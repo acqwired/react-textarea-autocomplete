@@ -48,7 +48,6 @@
   background: #fff;
   list-style: none;
   width: 284px;
-  ;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -62,7 +61,8 @@
   flex-direction: column;
   gap: 12px;
   padding-top: 20px;
-  ;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 
 .rta__listgroup {

@@ -181,6 +181,9 @@ export default class List extends React.Component<ListProps, ListState> {
         </div>
         <div>
           {groups.map(group => {
+            const filteredValues = values.filter(value => value.group === group.key);
+            if (!filteredValues.length)
+              return null;
             return <div>
               <div className="rta__listgroup">{group.label}</div>
               <ul className={`rta__list ${className || ""}`} style={style}>
