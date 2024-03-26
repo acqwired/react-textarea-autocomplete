@@ -28,17 +28,17 @@
   ],
   "scripts": {
     "build": "cp src/types.js types.js && rollup -c",
-    "dev": "yarn run example --open",
+    "dev": "npm run example --open",
     "example": "webpack-dev-server --config webpack.dev.config.js",
     "example:build": "webpack --config webpack.prod.config.js",
-    "prepublish": "yarn run build",
+    "prepublish": "npm run build",
     "lint": "eslint --ext=js --ext=jsx ./src",
-    "lint:fix": "yarn run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "flow": "flow",
     "flow:check": "flow check",
-    "cypress": "yarn run example & wait-on http://localhost:8080 && cypress run --headed",
+    "cypress": "npm run example & wait-on http://localhost:8080 && cypress run --headed",
     "cypress:open": "cypress open"
   },
   "devDependencies": {
