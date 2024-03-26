@@ -10,6 +10,10 @@ export default class List extends React.Component<ListProps, ListState> {
   state: ListState = {
     selectedItem: null
   };
+  constructor(props) {
+    super(props);
+    this.groupRefs = {};
+  }
 
   cachedIdOfItems: Map<Object | string, string> = new Map();
 
@@ -26,8 +30,8 @@ export default class List extends React.Component<ListProps, ListState> {
   componentDidUpdate({ values: oldValues }: ListProps) {
     const { values } = this.props;
 
-    const oldValuesSerialized = oldValues.map(val => this.getId(val)).join("");
-    const newValuesSerialized = values.map(val => this.getId(val)).join("");
+    const oldValuesSerialized = oldValues.map((val) => this.getId(val)).join("");
+    const newValuesSerialized = values.map((val) => this.getId(val)).join("");
 
     if (oldValuesSerialized !== newValuesSerialized && values && values[0]) {
       this.selectItem(values[0]);
@@ -58,7 +62,7 @@ export default class List extends React.Component<ListProps, ListState> {
 
     if (!selectedItem) return 0;
 
-    return values.findIndex(a => this.getId(a) === this.getId(selectedItem));
+    return values.findIndex((a) => this.getId(a) === this.getId(selectedItem));
   };
 
   getId = (item: Object | string): string => {
@@ -81,9 +85,7 @@ export default class List extends React.Component<ListProps, ListState> {
       }
 
       if (!item.key) {
-        throw new Error(
-          `Item ${JSON.stringify(item)} has to have defined "key" property`
-        );
+        throw new Error(`Item ${JSON.stringify(item)} has to have defined "key" property`);
       }
 
       // $FlowFixMe
@@ -148,12 +150,8 @@ export default class List extends React.Component<ListProps, ListState> {
         break;
     }
 
-    newPosition =
-      ((newPosition % values.length) + values.length) % values.length; // eslint-disable-line
-    this.selectItem(
-      values[newPosition],
-      [KEY_CODES.DOWN, KEY_CODES.UP].includes(code)
-    );
+    newPosition = ((newPosition % values.length) + values.length) % values.length; // eslint-disable-line
+    this.selectItem(values[newPosition], [KEY_CODES.DOWN, KEY_CODES.UP].includes(code));
   };
 
   isSelected = (item: Object | string): boolean => {
@@ -164,46 +162,57 @@ export default class List extends React.Component<ListProps, ListState> {
   };
 
   render() {
-    const {
-      values,
-      component,
-      style,
-      itemClassName,
-      className,
-      itemStyle,
-      groups
-    } = this.props;
+    const { values, component, style, itemClassName, className, itemStyle, groups } = this.props;
     return (
       <div className={`rta__listcontainer`}>
         <div className={`rta__listcontainertitle`}>Available Variables</div>
         <div className="rta__groups">
-          {groups.map(group => <button className="rta__group_button">{group.label}</button>)}
+          {groups.map((group, index) => (
+            <button
+              onClick={() => {
+                this.groupRefs[index.toString()].scrollIntoView();
+              }}
+              className="rta__group_button"
+            >
+              {group.label}
+            </button>
+          ))}
         </div>
         <div>
-          {groups.map(group => {
-            const filteredValues = values.filter(value => value.group === group.key);
-            if (!filteredValues.length)
-              return null;
-            return <div>
-              <div className="rta__listgroup">{group.label}</div>
-              <ul className={`rta__list ${className || ""}`} style={style}>
-                {values.filter(value => value.group === group.key).map(item => (
-                  <Item
-                    key={this.getId(item)}
-                    innerRef={ref => {
-                      this.itemsRef[this.getId(item)] = ref;
-                    }}
-                    selected={this.isSelected(item)}
-                    item={item}
-                    className={itemClassName}
-                    style={itemStyle}
-                    onClickHandler={this.onPressEnter}
-                    onSelectHandler={this.selectItem}
-                    component={component}
-                  />
-                ))}
-              </ul>
-            </div>
+          {groups.map((group, groupIndex) => {
+            const filteredValues = values.filter((value) => value.group === group.key);
+            if (!filteredValues.length) return null;
+            return (
+              <div>
+                <div
+                  className="rta__listgroup"
+                  ref={(ref) => {
+                    this.groupRefs[groupIndex.toString()] = ref;
+                  }}
+                >
+                  {group.label}
+                </div>
+                <ul className={`rta__list ${className || ""}`} style={style}>
+                  {values
+                    .filter((value) => value.group === group.key)
+                    .map((item) => (
+                      <Item
+                        key={this.getId(item)}
+                        innerRef={(ref) => {
+                          this.itemsRef[this.getId(item)] = ref;
+                        }}
+                        selected={this.isSelected(item)}
+                        item={item}
+                        className={itemClassName}
+                        style={itemStyle}
+                        onClickHandler={this.onPressEnter}
+                        onSelectHandler={this.selectItem}
+                        component={component}
+                      />
+                    ))}
+                </ul>
+              </div>
+            );
           })}
         </div>
       </div>
