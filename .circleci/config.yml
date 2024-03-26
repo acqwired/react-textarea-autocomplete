@@ -22,15 +22,15 @@ jobs:
           at: ~/
       - restore_cache:
           keys:
-            - v4-3-dependencies-{{ checksum "yarn.lock" }}
+            - v4-3-dependencies-{{ checksum "package-lock.json" }}
             # fallback to using the latest cache if no exact match is found
             - v4-3-dependencies-
       - run:
           name: Install Dependencies
           command: |
-            yarn install --frozen-lockfile
+            npm install --frozen-lockfile
       - save_cache:
-          key: v4-3-dependencies-{{ checksum "yarn.lock" }}
+          key: v4-3-dependencies-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
             # cache Cypress
@@ -45,13 +45,13 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run: yarn run lint
+      - run: npm run lint
   flow:
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/
-      - run: yarn run flow:check
+      - run: npm run flow:check
   e2e:
     <<: *cypress
     steps:
@@ -59,10 +59,10 @@ jobs:
           at: ~/
       - restore_cache:
           keys:
-            - v4-3-dependencies-{{ checksum "yarn.lock" }}
+            - v4-3-dependencies-{{ checksum "package-lock.json" }}
             # fallback to using the latest cache if no exact match is found
             - v4-3-dependencies-
-      - run: yarn run cypress
+      - run: npm run cypress
   tests:
     <<: *defaults
     steps:
@@ -70,12 +70,12 @@ jobs:
           at: ~/
       - restore_cache:
           keys:
-            - v4-3-jest-cache-{{ checksum "yarn.lock" }}
+            - v4-3-jest-cache-{{ checksum "package-lock.json" }}
             # fallback to using the latest cache if no exact match is found
             - v4-3-jest-cache-
-      - run: yarn run test
+      - run: npm run test
       - save_cache:
-          key: v4-3-jest-cache-{{ checksum "yarn.lock" }}
+          key: v4-3-jest-cache-{{ checksum "package-lock.json" }}
           paths:
             - .jestCache
       - persist_to_workspace:
@@ -86,7 +86,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run: yarn run build
+      - run: npm run build
       - persist_to_workspace:
           root: .
           paths: .
@@ -95,7 +95,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run: yarn run example:build && bash .circleci/comment-artifacts.sh
+      - run: npm run example:build && bash .circleci/comment-artifacts.sh
       - store_artifacts:
           path: ./example-build
           destination: example
