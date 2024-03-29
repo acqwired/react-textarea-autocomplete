@@ -89,7 +89,7 @@ export default class List extends React.Component<ListProps, ListState> {
       }
 
       // $FlowFixMe
-      return item.key;
+      return `${item.group}__${item.key}`;
     };
 
     const id = computeId();
@@ -170,7 +170,8 @@ export default class List extends React.Component<ListProps, ListState> {
           {groups.map((group, index) => (
             <button
               onClick={() => {
-                this.groupRefs[index.toString()].scrollIntoView();
+                if(this.groupRefs[index.toString()])
+                  this.groupRefs[index.toString()].scrollIntoView();
               }}
               className="rta__group_button"
             >
