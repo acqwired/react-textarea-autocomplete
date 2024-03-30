@@ -76,6 +76,7 @@
 
 .rta__listcontainertitle {
   font-size: 14px;
+  line-height: 100%;
   font-weight: 700;
   padding: 0px 16px;
 }
@@ -116,4 +117,8 @@
   background-color: #f6f7f8;
   color: #8c93a5;
   padding: 4px;
+}
+
+.rta__group_button:hover {
+  background-color: #f1f2f4;
 }

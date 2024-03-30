@@ -169,9 +169,9 @@ export default class List extends React.Component<ListProps, ListState> {
         <div className="rta__groups">
           {groups.map((group, index) => (
             <button
+              key={group.key}
               onClick={() => {
-                if(this.groupRefs[index.toString()])
-                  this.groupRefs[index.toString()].scrollIntoView();
+                if (this.groupRefs[index.toString()]) this.groupRefs[index.toString()].scrollIntoView();
               }}
               className="rta__group_button"
             >
