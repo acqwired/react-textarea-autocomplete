@@ -50,7 +50,6 @@
   padding: 0px;
   background: #fff;
   list-style: none;
-  width: 284px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -62,8 +61,8 @@
   box-shadow: 0 0 5px rgba(27, 31, 35, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-top: 20px;
+  gap: 16px;
+  padding-top: 16px;
   max-height: 400px;
   overflow-y: scroll;
   width: 300px;
@@ -71,14 +70,14 @@
 
 .rta__listgroup {
   background-color: #f6f7f8;
-  padding: 4px 20px;
+  padding: 4px 16px;
   font-size: 12px;
 }
 
 .rta__listcontainertitle {
   font-size: 14px;
   font-weight: 700;
-  padding: 0px 20px;
+  padding: 0px 16px;
 }
 
 .rta__entity {
@@ -86,7 +85,7 @@
   width: 100%;
   text-align: left;
   outline: none;
-  padding: 8px 20px;
+  padding: 8px 16px;
 }
 
 .rta__entity:hover {
@@ -105,7 +104,7 @@
 }
 
 .rta__groups {
-  padding: 0px 20px;
+  padding: 0px 16px;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
