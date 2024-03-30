@@ -21,7 +21,7 @@
   background: rgba(255, 255, 255, 0.8);
 }
 
-.rta--loading .rta__loader.rta__loader--suggestion-data>* {
+.rta--loading .rta__loader.rta__loader--suggestion-data > * {
   position: relative;
   top: 50%;
 }
@@ -66,10 +66,11 @@
   padding-top: 20px;
   max-height: 400px;
   overflow-y: scroll;
+  width: 300px;
 }
 
 .rta__listgroup {
-  background-color: #F6F7F8;
+  background-color: #f6f7f8;
   padding: 4px 20px;
   font-size: 12px;
 }
@@ -93,7 +94,7 @@
   background-color: #e2e0ff;
 }
 
-.rta__entity>* {
+.rta__entity > * {
   padding-left: 4px;
   padding-right: 4px;
 }
@@ -106,13 +107,14 @@
 .rta__groups {
   padding: 0px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .rta__group_button {
   font-size: 12px;
-  background-color: #F6F7F8;
-  color: #8C93A5;
+  background-color: #f6f7f8;
+  color: #8c93a5;
   padding: 4px;
-  ;
 }
