@@ -1,15 +1,16 @@
 // @flow
 
-import React from "react";
+import React from 'react';
 
-import Listeners, { KEY_CODES } from "./listener";
-import Item from "./Item";
-import type { ListProps, ListState } from "./types";
+import Listeners, { KEY_CODES } from './listener';
+import Item from './Item';
+import type { ListProps, ListState } from './types';
 
 export default class List extends React.Component<ListProps, ListState> {
   state: ListState = {
     selectedItem: null
   };
+
   constructor(props) {
     super(props);
     this.groupRefs = {};
@@ -24,14 +25,16 @@ export default class List extends React.Component<ListProps, ListState> {
     );
 
     const { values } = this.props;
-    if (values && values[0]) this.selectItem(values[0]);
+    if (values && values[0]) {
+      this.selectItem(values[0]);
+    }
   }
 
   componentDidUpdate({ values: oldValues }: ListProps) {
     const { values } = this.props;
 
-    const oldValuesSerialized = oldValues.map((val) => this.getId(val)).join("");
-    const newValuesSerialized = values.map((val) => this.getId(val)).join("");
+    const oldValuesSerialized = oldValues.map((val) => this.getId(val)).join('');
+    const newValuesSerialized = values.map((val) => this.getId(val)).join('');
 
     if (oldValuesSerialized !== newValuesSerialized && values && values[0]) {
       this.selectItem(values[0]);
@@ -47,7 +50,7 @@ export default class List extends React.Component<ListProps, ListState> {
   }
 
   onPressEnter = (e: SyntheticEvent<*>) => {
-    if (typeof e !== "undefined") {
+    if (typeof e !== 'undefined') {
       e.preventDefault();
     }
 
@@ -60,7 +63,9 @@ export default class List extends React.Component<ListProps, ListState> {
     const { values } = this.props;
     const { selectedItem } = this.state;
 
-    if (!selectedItem) return 0;
+    if (!selectedItem) {
+      return 0;
+    }
 
     return values.findIndex((a) => this.getId(a) === this.getId(selectedItem));
   };
@@ -79,7 +84,7 @@ export default class List extends React.Component<ListProps, ListState> {
           return textToReplace.key;
         }
 
-        if (typeof item === "string" || !item.key) {
+        if (typeof item === 'string' || !item.key) {
           return textToReplace.text;
         }
       }
@@ -108,7 +113,9 @@ export default class List extends React.Component<ListProps, ListState> {
   } = {};
 
   modifyText = (value: Object | string) => {
-    if (!value) return;
+    if (!value) {
+      return;
+    }
 
     const { onSelect } = this.props;
 
@@ -118,7 +125,9 @@ export default class List extends React.Component<ListProps, ListState> {
   selectItem = (item: Object | string, keyboard: boolean = false) => {
     const { onItemHighlighted } = this.props;
 
-    if (this.state.selectedItem === item) return;
+    if (this.state.selectedItem === item) {
+      return;
+    }
 
     this.setState({ selectedItem: item }, () => {
       onItemHighlighted(item);
@@ -156,7 +165,9 @@ export default class List extends React.Component<ListProps, ListState> {
 
   isSelected = (item: Object | string): boolean => {
     const { selectedItem } = this.state;
-    if (!selectedItem) return false;
+    if (!selectedItem) {
+      return false;
+    }
 
     return this.getId(selectedItem) === this.getId(item);
   };
@@ -167,22 +178,34 @@ export default class List extends React.Component<ListProps, ListState> {
       <div className={`rta__listcontainer`}>
         <div className={`rta__listcontainertitle`}>Available Variables</div>
         <div className="rta__groups">
-          {groups.map((group, index) => (
-            <button
-              key={group.key}
-              onClick={() => {
-                if (this.groupRefs[index.toString()]) this.groupRefs[index.toString()].scrollIntoView();
-              }}
-              className="rta__group_button"
-            >
-              {group.label}
-            </button>
-          ))}
+          {
+            (values.length === 1 && values[0].group === 'nomatch')
+              ? <div className="rta_nomatch">
+                Hmm, couldn't find any variables matching your input. But don't worry, make your input broader and we'll suggest some options as you go!
+              </div>
+              : groups.map((group, index) => (
+                <button
+                  key={group.key}
+                  onClick={() => {
+                    if (this.groupRefs[index.toString()]) {
+                      this.groupRefs[index.toString()].scrollIntoView();
+                    }
+                  }}
+                  className="rta__group_button"
+                >
+                  {group.label}
+                </button>
+              ))}
         </div>
         <div>
           {groups.map((group, groupIndex) => {
+            if (values.length === 1 && values[0].group === 'nomatch') {
+              return null;
+            }
             const filteredValues = values.filter((value) => value.group === group.key);
-            if (!filteredValues.length) return null;
+            if (!filteredValues.length) {
+              return null;
+            }
             return (
               <div>
                 <div
@@ -193,7 +216,7 @@ export default class List extends React.Component<ListProps, ListState> {
                 >
                   {group.label}
                 </div>
-                <ul className={`rta__list ${className || ""}`} style={style}>
+                <ul className={`rta__list ${className || ''}`} style={style}>
                   {values
                     .filter((value) => value.group === group.key)
                     .map((item) => (
