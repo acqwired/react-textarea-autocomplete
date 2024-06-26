@@ -5,6 +5,8 @@ import React from 'react';
 import Listeners, { KEY_CODES } from './listener';
 import Item from './Item';
 import type { ListProps, ListState } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFaceFrownOpen } from '@fortawesome/free-regular-svg-icons';
 
 export default class List extends React.Component<ListProps, ListState> {
   state: ListState = {
@@ -180,8 +182,11 @@ export default class List extends React.Component<ListProps, ListState> {
         <div className="rta__groups">
           {
             (values.length === 1 && values[0].group === 'nomatch')
-              ? <div className="rta_nomatch">
-                Hmm, couldn't find any variables matching your input. But don't worry, make your input broader and we'll suggest some options as you go!
+              ? <div className="rta__nomatch">
+                <FontAwesomeIcon icon={faFaceFrownOpen} size="2x" className="nomatch-icon" />
+                <div className="nomatch-text">
+                  Hmm, couldn't find any variables matching your input. But don't worry, make your input broader and we'll suggest some options as you go!
+                </div>
               </div>
               : groups.map((group, index) => (
                 <button
