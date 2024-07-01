@@ -181,12 +181,12 @@ export default class List extends React.Component<ListProps, ListState> {
           {
             (values.length === 1 && values[0].group === 'nomatch')
               ? <div className="rta__nomatch">
-                {/*<FontAwesomeIcon icon={faFaceFrownOpen} size="2x" className="nomatch-icon" />*/}
                 <div className="nomatch-text">
                   No variables found
                 </div>
               </div>
               : groups.map((group, index) => (
+                group.key !== 'nomatch' &&
                 <button
                   key={group.key}
                   onClick={() => {
